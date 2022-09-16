@@ -19,7 +19,7 @@ public class HomeWorkOne {
         var second = new int[]{45, 10, 11};
         System.out.println(Arrays.toString(diffArrays(first, second)));
         var oneMassive = new Integer[]{123, 5, 25};
-        var secondMassive = new Integer[]{23, 5, 0, 5};
+        var secondMassive = new Integer[]{23, 5, 1};
         System.out.println(Arrays.toString(delArrays(oneMassive, secondMassive)));
 
     }
@@ -93,4 +93,5 @@ public class HomeWorkOne {
         }
         return result;
     }
+
 }
