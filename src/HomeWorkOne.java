@@ -14,15 +14,20 @@ public class HomeWorkOne {
         System.out.println(sum2d(arr));
 
         arr=null;
-        System.out.println(sum2d(arr));*/
-        var first = new int[]{123, 5, 26};
-        var second = new int[]{45, 10, 11};
-        System.out.println(Arrays.toString(diffArrays(first, second)));
-        var oneMassive = new Integer[]{123, 5, 25};
-        var secondMassive = new Integer[]{23, 5, 1};
-        System.out.println(Arrays.toString(delArrays(oneMassive, secondMassive)));
+//        System.out.println(sum2d(arr));*/
+//        var first = new int[]{123, 5, 26};
+//        var second = new int[]{45, 10, 11};
+//        System.out.println(Arrays.toString(diffArrays(first, second)));
+//        var oneMassive = new Integer[]{123, 5, 25};
+//        var secondMassive = new Integer[]{23, 5, 1};
+//        System.out.println(Arrays.toString(delArrays(oneMassive, secondMassive)));
+
+
+        String [][]arr={{"1","2","3","4"},{"1","2","3","4"},{"1","2","4"},{"1","2","3","4"}} ;
+        massiv(arr);
 
     }
+
 
     // 1) Реализуйте 3 метода, чтобы в каждом из них получить разные исключения
     public static void method1() {
@@ -94,4 +99,24 @@ public class HomeWorkOne {
         return result;
     }
 
+    public static void massiv (String [][] arr) {
+        int sum = 0;
+        if (arr.length>4) {
+            throw new MyArraySizeException();
+        }
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i].length>4) {
+                    throw new MyArraySizeException();
+                }
+            for (int j = 0; j < arr[i].length; j++) {
+                sum +=Integer.parseInt(arr[i][j]);
+            }
+        }
+        System.out.println(sum);
+    }
+    public static class MyArraySizeException extends IndexOutOfBoundsException {
+        MyArraySizeException() {
+            super ("Массив не 4х4");
+        }
+    }
 }
