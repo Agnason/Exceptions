@@ -21,35 +21,43 @@ package hw3;
 При возникновении проблемы с чтением-записью в файл, исключение должно быть корректно обработано, пользователь должен увидеть стектрейс ошибки.
  */
 
-import javax.print.DocFlavor;
-import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
-import static java.lang.System.in;
 
 public class HomeWork3 {
 
-    String answerFio;
-
-    public static void main(String[] args) {
-
-        try {
-
-
-            String[] textFio = info("Пожалуйста, напишите ФАМИЛИЯ_ИМЯ_ОТЧЕСТВО через пробел!!!").split(" ");
-            if (textFio.length < 3) {
-                System.out.println(("Вы не полностью ввели ФИО!"));
-            }else {
-                String [] textDateOfBirth = info("Введите свою дату рождения (пример: 15.15.2001").split(".");
-                System.out.println("Вы неправильно ввели");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public static void main(String[] args) throws IOException {
+        Date date = new Date();
+        String textFio = info("Пожалуйста, напишите ФАМИЛИЯ_ИМЯ_ОТЧЕСТВО через пробел!!!");
+        if (!textFio.matches("(.*\\D)?\\s(.*\\D)?\\s(.*\\D)")) {
+            throw new RuntimeException("ВВедено ФИО не по формату или есть цифры");
         }
+        String textDateOfBirth = info("Введите свою дату рождения (пример: 15.15.2001)");
+        if (!textDateOfBirth.matches("(0\\d|[12]\\d|3[01])?[.](0\\d|1\\d)?[.](19|20)\\d{2}")) {
+            throw new RuntimeException("Неверно введена дата Вашего день рождения!");
+        }
+        String textMobile = info("Введите Ваш номер мобильного телефона");
+        if (!textMobile.matches("(^(7)?\\d{3})\\d{7}$")) {
+            throw new RuntimeException(("Написали номер телефона не по формату"));
+        }
+        String textGender = info("Введите Ваш пол: m (если мальчик), f (если девочка)");
+        if (!textGender.matches("f|m")) {
+            throw new RuntimeException("Введите f или m!!!");
+        }
+        String textFinal = "Данные пользователя: " + "\n" + date + "\n" + textFio + " " + textDateOfBirth + " " + textMobile + " " + textGender + "\n";
+        String[] textFioSplit = textFio.split(" ");
+        String surname = textFioSplit[0];
 
-
+        try (FileWriter fw = new FileWriter(surname + ".txt", true);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(textFinal);
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
     }
 
     public static String info(String message) {
@@ -57,6 +65,5 @@ public class HomeWork3 {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
-
 
 }
